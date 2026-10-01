@@ -43,7 +43,7 @@
           <p>Todos os planos são construídos a partir destes módulos, combinados de acordo com o pacote escolhido.</p>
         </div>
 
-        <div class="modules-grid">
+        <div class="modules-grid container-servicos">
           <article class="module-card">
             <span class="module-code">FI</span>
             <h3>Fiscal</h3>
@@ -74,6 +74,35 @@
             <h3>Relatórios &amp; BI</h3>
             <p>Painéis gerenciais com indicadores de vendas, estoque e financeiro.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="consulta-servico">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><span class="dot"></span> Tire sua dúvida</span>
+          <h2>Consulte um serviço do Noxus ERP</h2>
+          <p>Escolha um módulo e veja uma orientação rápida sobre como ele funciona no dia a dia da sua empresa.</p>
+        </div>
+
+        <div class="consulta-card">
+          <div class="field">
+            <label for="servico">Escolha um serviço:</label>
+            <select id="servico" name="servico">
+              <option value="">Selecione...</option>
+              <option value="fiscal">Emissão de notas (Fiscal)</option>
+              <option value="estoque">Controle de estoque</option>
+              <option value="financeiro">Gestão financeira</option>
+              <option value="vendas">Vendas &amp; PDV</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button id="btnConsultar" type="button" class="btn btn-primary">Consultar orientação</button>
+          </div>
+
+          <p id="resultado" class="consulta-resultado" aria-live="polite"></p>
         </div>
       </div>
     </section>
@@ -162,5 +191,6 @@
     </div>
   </footer>
 
+  <script src="js/script.js" defer></script>
 </body>
 </html>

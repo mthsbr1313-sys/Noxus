@@ -107,6 +107,32 @@
       </div>
     </section>
 
+    <section class="catalogo-servico">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><span class="dot"></span> Catálogo dinâmico</span>
+          <h2>Catálogo de serviços</h2>
+          <p>Filtre por categoria e veja os serviços do Noxus ERP montados automaticamente pelo JavaScript, a partir de uma lista de dados.</p>
+        </div>
+
+        <div class="filtro-servico">
+          <div class="field">
+            <label for="filtroCategoria">Filtrar serviços por categoria:</label>
+            <select id="filtroCategoria" name="filtroCategoria">
+              <option value="todos">Todos os serviços</option>
+              <option value="fiscal">Fiscal</option>
+              <option value="estoque">Estoque</option>
+              <option value="financeiro">Financeiro</option>
+              <option value="vendas">Vendas</option>
+            </select>
+          </div>
+          <p id="mensagemFiltro" class="mensagem-filtro" aria-live="polite"></p>
+        </div>
+
+        <div id="listaServicos" class="lista-servicos"></div>
+      </div>
+    </section>
+
     <section class="band">
       <div class="container">
         <div class="section-head">
@@ -169,6 +195,35 @@
         </div>
 
         <p class="plans-note">Valores fictícios, apresentados apenas como exemplo para fins acadêmicos.</p>
+      </div>
+    </section>
+
+    <section class="preferencia">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><span class="dot"></span> Sua preferência</span>
+          <h2>Meu serviço favorito</h2>
+          <p>Escolha a categoria que você mais usa. O Portal lembra da sua escolha mesmo depois de atualizar a página.</p>
+        </div>
+
+        <div class="preferencia-card">
+          <div class="field">
+            <label for="servicoFavorito">Escolha:</label>
+            <select id="servicoFavorito" name="servicoFavorito">
+              <option value="">Selecione...</option>
+              <option value="fiscal">Fiscal</option>
+              <option value="estoque">Estoque</option>
+              <option value="financeiro">Financeiro</option>
+              <option value="vendas">Vendas</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button id="btnSalvarFavorito" type="button" class="btn btn-primary">Salvar favorito</button>
+          </div>
+
+          <p id="favoritoSalvo" class="favorito-mensagem" aria-live="polite"></p>
+        </div>
       </div>
     </section>
 

@@ -743,6 +743,12 @@ section {
   padding-left: 14px;
 }
 
+/* Atividade final: endereço devolvido pela API ViaCEP */
+.cep-resultado {
+  margin-top: 10px;
+  color: var(--gray-text);
+}
+
 /* ================================================================
    CATÁLOGO DE SERVIÇOS — Aulas 09 e 10 (arrays, funções, DOM)
    e Aula 11 (filtro interativo com change, value e filter)

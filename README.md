@@ -1,15 +1,79 @@
 # Noxus Sistemas
 
-Site institucional do Noxus Sistemas, ERP para gestão comercial (emissão de notas,
-controle de estoque, financeiro e vendas). Projeto desenvolvido na disciplina de
-Programação Web.
+## Sobre o projeto
+
+Portal institucional do Noxus Sistemas, um ERP fictício para gestão comercial
+(emissão de notas, controle de estoque, financeiro e vendas). O Portal ajuda
+uma empresa pequena ou média a entender o que o sistema oferece, comparar os
+planos, tirar dúvidas sobre cada módulo e pedir contato com a equipe, tudo
+sem precisar ligar antes. Projeto desenvolvido ao longo do semestre na
+disciplina de Programação Web Front-End (ADS, 2026.2).
+
+## Tecnologias utilizadas
+
+- HTML5 (semântico: `header`, `nav`, `main`, `section`, `article`, `footer`)
+- CSS3 (arquivo externo, Flexbox, Grid e media queries)
+- JavaScript (sem bibliotecas)
+- Git e GitHub (versionamento e GitHub Pages)
+- API ViaCEP
+
+## Funcionalidades
+
+- Consulta interativa de serviço, com uma orientação para cada módulo
+- Catálogo de serviços montado a partir de um array de objetos (`forEach`)
+- Filtro do catálogo por categoria (`filter`)
+- Formulário de contato com validação em JavaScript (`preventDefault`, `trim`)
+- Serviço favorito lembrado pelo navegador (LocalStorage)
+- Consulta de endereço por CEP com API pública (ViaCEP)
+
+## API utilizada
+
+O [ViaCEP](https://viacep.com.br/) é um Web Service público e gratuito que
+recebe um CEP na URL e devolve os dados do endereço em JSON (`cep`,
+`logradouro`, `bairro`, `localidade`, `uf`...). Não precisa de cadastro nem
+de chave, e libera o acesso pelo navegador (CORS).
+
+Em `js/cep.js`, a função `buscarCep`:
+
+1. tira do CEP tudo que não é número e só continua se sobrarem 8 dígitos
+   (se não, mostra "Digite um CEP com 8 números." e não consulta a API);
+2. mostra "Consultando CEP..." enquanto espera;
+3. faz `fetch("https://viacep.com.br/ws/CEP/json/")` (método GET) com `await`;
+4. confere `resposta.ok` e converte a resposta com `resposta.json()`;
+5. se a API devolver `erro`, mostra "CEP não encontrado.";
+6. se der tudo certo, escreve logradouro, bairro e cidade/UF na página;
+7. se a Internet ou a API falhar, o `catch` mostra "Não foi possível
+   consultar o CEP agora." e o resto da página continua funcionando.
+
+## Como testar
+
+Abra `index.html` no navegador (ou o link publicado) e navegue pelo menu.
+
+- **`servicos.html` → Consulte um serviço:** escolha um módulo e clique em
+  "Consultar orientação"; sem escolher nada, aparece um aviso.
+- **`servicos.html` → Catálogo de serviços:** troque a categoria no filtro e
+  veja os cards mudarem.
+- **`servicos.html` → Consulta de endereço por CEP:** teste `123` (formato
+  inválido), `01001-000` (válido, Praça da Sé) e `99999-999` (inexistente).
+  Para ver a falha de consulta, marque "Offline" em F12 → Network e busque
+  de novo.
+- **`servicos.html` → Meu serviço favorito:** salve um favorito, atualize a
+  página (F5) e confira que a escolha continua lá.
+- **`contato.html` → formulário:** tente enviar só com espaços no nome e
+  depois preencha tudo para ver a mensagem de confirmação.
+
+## Publicação
+
+- Repositório: https://github.com/mthsbr1313-sys/Noxus
+- Link do GitHub Pages: https://mthsbr1313-sys.github.io/Noxus/
 
 ## Páginas
 
 - `index.html` — página inicial
 - `servicos.html` — módulos do ERP, consulta interativa, catálogo dinâmico
-  com filtro por categoria, preferência de serviço favorito (LocalStorage)
-  e planos (Essencial, Profissional, Enterprise)
+  com filtro por categoria, consulta de CEP (API ViaCEP), preferência de
+  serviço favorito (LocalStorage) e planos (Essencial, Profissional,
+  Enterprise)
 - `contato.html` — canais de atendimento, imagem de fundo em destaque e
   formulário de contato validado com JavaScript
 - `suporte.html` — formulário de abertura de chamado para o chat de suporte
@@ -17,7 +81,7 @@ Programação Web.
 ## Estrutura
 
 ```
-noxus-sistemas/
+Noxus/
 ├── index.html
 ├── servicos.html
 ├── contato.html
@@ -25,7 +89,8 @@ noxus-sistemas/
 ├── css/
 │   └── style.css
 ├── js/
-│   └── script.js
+│   ├── script.js   (consulta, catálogo, filtro, validação, LocalStorage)
+│   └── cep.js      (consulta de CEP na API ViaCEP)
 └── img/
     ├── logo-placeholder.svg
     ├── inicio.webp
@@ -315,8 +380,8 @@ de `setItem`/`getItem` em `js/script.js`.
 Preencher antes de enviar:
 
 - Nome completo:
-- Link do repositório GitHub:
-- Link do GitHub Pages (se já publicado):
+- Link do repositório GitHub: https://github.com/mthsbr1313-sys/Noxus
+- Link do GitHub Pages: https://mthsbr1313-sys.github.io/Noxus/
 - Captura de tela da página de serviços com os cards organizados (Flexbox): (anexar)
 - Captura de tela da consulta de serviço funcionando, com uma mensagem exibida (Aula 08): (anexar)
 - Captura de tela do catálogo de serviços montado dinamicamente (Aulas 09 e 10): (anexar)
@@ -327,3 +392,53 @@ Preencher antes de enviar:
 ## Autor(a)
 
 Matheus
+
+## Panorama Front-End
+
+**1. O que significa componentização e por que dividir uma interface em
+partes reutilizáveis?**
+É montar a interface com peças independentes (um card, um botão, um
+cabeçalho) em vez de uma página só, gigante. No Noxus, o card de serviço é
+um exemplo: a função `renderizarServicos` cria o mesmo "molde" para cada
+item do array. A vantagem é escrever uma vez, usar em vários lugares e
+corrigir em um ponto só.
+
+**2. Qual a diferença geral entre uma aplicação multipágina e uma SPA?**
+Na multipágina, cada tela é um arquivo HTML e o navegador carrega a página
+inteira a cada clique no menu — é o caso deste Portal (`index.html`,
+`servicos.html`, `contato.html`). Na SPA existe um único HTML e o JavaScript
+troca o conteúdo na tela sem recarregar, buscando só os dados, o que deixa a
+navegação mais fluida, mas o projeto mais complexo.
+
+**3. O que é Bootstrap e em que situação ele pode acelerar a criação de uma
+interface responsiva?**
+É uma biblioteca de CSS (com um pouco de JavaScript) que já traz um sistema
+de grade e componentes prontos, como botões, menus e formulários. Ajuda
+quando o prazo é curto ou a tela é padrão (um painel administrativo, um
+protótipo), porque basta aplicar as classes prontas em vez de escrever o
+CSS responsivo do zero, como foi feito aqui com Flexbox e media queries.
+
+**4. O que são React, Vue e Angular? Cite uma característica geral de cada
+um.**
+São ferramentas JavaScript para construir interfaces com componentes,
+muito usadas em SPAs. React é uma biblioteca (da Meta) em que o HTML do
+componente é escrito dentro do JavaScript, com JSX. Vue é um framework
+progressivo: dá para começar pequeno, e o HTML, o CSS e o JS do componente
+ficam juntos em um arquivo `.vue`. Angular é um framework completo (do
+Google), que usa TypeScript e já vem com rotas, formulários e requisições
+HTTP incluídos.
+
+**5. Por que frameworks não substituem o conhecimento de HTML, CSS e
+JavaScript?**
+Porque no final todo framework gera HTML, CSS e JavaScript para o
+navegador. Quando algo quebra, é no DOM, no Console e no CSS que o problema
+aparece, e sem a base não dá para entender o erro. Além disso, frameworks
+mudam e saem de moda; a base continua a mesma.
+
+**6. Como a IA pode ajudar no desenvolvimento sem substituir a compreensão
+do código?**
+Ela ajuda a explicar um erro, sugerir um trecho, revisar o código e
+escrever documentação mais rápido. Mas ela também erra e não conhece o
+projeto por inteiro, então quem desenvolve precisa ler, testar e saber
+explicar cada linha antes de usar — a responsabilidade pelo código continua
+sendo de quem o entrega.

@@ -133,6 +133,30 @@
       </div>
     </section>
 
+    <section class="consulta-cep">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow"><span class="dot"></span> API pública ViaCEP</span>
+          <h2>Consulta de endereço por CEP</h2>
+          <p>Digite um CEP brasileiro com 8 números para conferir o endereço da sua empresa antes de solicitar a implantação do Noxus ERP.</p>
+        </div>
+
+        <div class="consulta-card">
+          <div class="field">
+            <label for="cep">CEP:</label>
+            <input id="cep" type="text" inputmode="numeric" maxlength="9" placeholder="00000-000">
+          </div>
+
+          <div class="form-actions">
+            <button id="btnBuscarCep" type="button" class="btn btn-primary">Buscar endereço</button>
+          </div>
+
+          <p id="statusCep" class="consulta-resultado" aria-live="polite"></p>
+          <div id="resultadoCep" class="cep-resultado"></div>
+        </div>
+      </div>
+    </section>
+
     <section class="band">
       <div class="container">
         <div class="section-head">
@@ -247,5 +271,6 @@
   </footer>
 
   <script src="js/script.js" defer></script>
+  <script src="js/cep.js"></script>
 </body>
 </html>
